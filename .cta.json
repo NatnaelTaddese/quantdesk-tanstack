@@ -20,5 +20,3 @@
     "compiler"
   ]
 }
-
-"chosenAddOns": ["eslint", "nitro", "start"]
