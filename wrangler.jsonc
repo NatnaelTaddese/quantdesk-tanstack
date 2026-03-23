@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "quantdesk-tanstack",
-  "compatibility_date": "2026-03-20",
+  "compatibility_date": "2026-03-17",
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
   "workers_dev": true,

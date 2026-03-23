@@ -19,6 +19,7 @@ import { Route as AppPortfolioRouteImport } from './routes/_app.portfolio'
 import { Route as AppNewsRouteImport } from './routes/_app.news'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
 import { Route as AppChartRouteImport } from './routes/_app.chart'
+import { Route as AppChartIndexRouteImport } from './routes/_app.chart.index'
 import { Route as AppChartTickerRouteImport } from './routes/_app.chart.$ticker'
 
 const AppRoute = AppRouteImport.update({
@@ -70,6 +71,11 @@ const AppChartRoute = AppChartRouteImport.update({
   path: '/chart',
   getParentRoute: () => AppRoute,
 } as any)
+const AppChartIndexRoute = AppChartIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppChartRoute,
+} as any)
 const AppChartTickerRoute = AppChartTickerRouteImport.update({
   id: '/$ticker',
   path: '/$ticker',
@@ -87,10 +93,10 @@ export interface FileRoutesByFullPath {
   '/screener': typeof AppScreenerRoute
   '/settings': typeof AppSettingsRoute
   '/chart/$ticker': typeof AppChartTickerRoute
+  '/chart/': typeof AppChartIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/chart': typeof AppChartRouteWithChildren
   '/dashboard': typeof AppDashboardRoute
   '/news': typeof AppNewsRoute
   '/portfolio': typeof AppPortfolioRoute
@@ -99,6 +105,7 @@ export interface FileRoutesByTo {
   '/screener': typeof AppScreenerRoute
   '/settings': typeof AppSettingsRoute
   '/chart/$ticker': typeof AppChartTickerRoute
+  '/chart': typeof AppChartIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -113,6 +120,7 @@ export interface FileRoutesById {
   '/_app/screener': typeof AppScreenerRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/chart/$ticker': typeof AppChartTickerRoute
+  '/_app/chart/': typeof AppChartIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -127,10 +135,10 @@ export interface FileRouteTypes {
     | '/screener'
     | '/settings'
     | '/chart/$ticker'
+    | '/chart/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/chart'
     | '/dashboard'
     | '/news'
     | '/portfolio'
@@ -139,6 +147,7 @@ export interface FileRouteTypes {
     | '/screener'
     | '/settings'
     | '/chart/$ticker'
+    | '/chart'
   id:
     | '__root__'
     | '/'
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/_app/screener'
     | '/_app/settings'
     | '/_app/chart/$ticker'
+    | '/_app/chart/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -231,6 +241,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChartRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/chart/': {
+      id: '/_app/chart/'
+      path: '/'
+      fullPath: '/chart/'
+      preLoaderRoute: typeof AppChartIndexRouteImport
+      parentRoute: typeof AppChartRoute
+    }
     '/_app/chart/$ticker': {
       id: '/_app/chart/$ticker'
       path: '/$ticker'
@@ -243,10 +260,12 @@ declare module '@tanstack/react-router' {
 
 interface AppChartRouteChildren {
   AppChartTickerRoute: typeof AppChartTickerRoute
+  AppChartIndexRoute: typeof AppChartIndexRoute
 }
 
 const AppChartRouteChildren: AppChartRouteChildren = {
   AppChartTickerRoute: AppChartTickerRoute,
+  AppChartIndexRoute: AppChartIndexRoute,
 }
 
 const AppChartRouteWithChildren = AppChartRoute._addFileChildren(

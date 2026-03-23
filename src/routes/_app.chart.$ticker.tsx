@@ -138,7 +138,7 @@ export const Route = createFileRoute("/_app/chart/$ticker")({
 })
 
 function ChartTickerPage() {
-	const params = useParams({ from: "/chart/$ticker" })
+	const params = useParams({ from: "/_app/chart/$ticker" })
 	const ticker = params.ticker?.toUpperCase() ?? "AAPL"
 	const data =
 		mockStockData[ticker as keyof typeof mockStockData] ?? mockStockData.AAPL
